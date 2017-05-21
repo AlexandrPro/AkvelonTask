@@ -44,17 +44,18 @@ namespace AkvelonTask.BLL.MatrixProcessing
                 {
                     if (matrix[i][j] == 0)
                     {
-                        if (sequence > maxSequence)
-                        {
-                            maxSequence = sequence;
-                        }
                         sequence = 0;
                     }
                     else
                     {
                         ++sequence;
+                        if (sequence > maxSequence)
+                        {
+                            maxSequence = sequence;
+                        }
                     }
                 }
+                sequence = 0;
             }
             
             for (int i = 0, j = 0; i < matrix[0].Count; i++)//colnums
@@ -63,17 +64,18 @@ namespace AkvelonTask.BLL.MatrixProcessing
                 {
                     if (matrix[j][i] == 0)
                     {
-                        if (sequence > maxSequence)
-                        {
-                            maxSequence = sequence;
-                        }
                         sequence = 0;
                     }
                     else
                     {
                         ++sequence;
+                        if (sequence > maxSequence)
+                        {
+                            maxSequence = sequence;
+                        }
                     }
                 }
+                sequence = 0;
             }
 
             return maxSequence;
