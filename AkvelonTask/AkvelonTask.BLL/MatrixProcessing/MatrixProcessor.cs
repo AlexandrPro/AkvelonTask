@@ -37,48 +37,69 @@ namespace AkvelonTask.BLL.MatrixProcessing
 
         public int LongestSequenceOfOne()
         {
-            int maxSequence = 0, sequence = 0;
-            for(int i = 0; i < matrix.Count; i++)//rows
+            int maxSequence = 0, rowSequence = 0, lineSequence = 0;
+
+            for (int i = 0; i < matrix.Count; i++)
             {
-                for (int j = 0; j < matrix[i].Count; j++)
+                lineSequence = lineSearch(i);
+                if(lineSequence > maxSequence )
                 {
-                    if (matrix[i][j] == 0)
-                    {
-                        sequence = 0;
-                    }
-                    else
-                    {
-                        ++sequence;
-                        if (sequence > maxSequence)
-                        {
-                            maxSequence = sequence;
-                        }
-                    }
+                    maxSequence = lineSequence;
                 }
-                sequence = 0;
-            }
-            
-            for (int i = 0, j = 0; i < matrix[0].Count; i++)//colnums
-            {
-                for (j = 0; j < matrix.Count; j++)
-                {
-                    if (matrix[j][i] == 0)
-                    {
-                        sequence = 0;
-                    }
-                    else
-                    {
-                        ++sequence;
-                        if (sequence > maxSequence)
-                        {
-                            maxSequence = sequence;
-                        }
-                    }
-                }
-                sequence = 0;
             }
 
+            for (int i = 0; i < matrix[0].Count; i++)
+            {
+                rowSequence = rowSearch(i);
+                if (rowSequence > maxSequence)
+                {
+                    maxSequence = rowSequence;
+                }
+            }
+            
             return maxSequence;
+        }
+
+        private int lineSearch(int lineNum)
+        {
+            int sequence = 0, max = 0;
+            for (int j = 0; j < matrix[lineNum].Count; j++)
+            {
+                if (matrix[lineNum][j] == 0)
+                {
+                    sequence = 0;
+                }
+                else
+                {
+                    ++sequence;
+                    if (sequence > max)
+                    {
+                        max = sequence;
+                    }
+                }
+            }
+            return max;
+        }
+
+        private int rowSearch(int rowNum)
+        {
+            int sequence = 0, max = 0;
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                if (matrix[i][rowNum] == 0)
+                {
+                    sequence = 0;
+                }
+                else
+                {
+                    ++sequence;
+                    if (sequence > max)
+                    {
+                        max = sequence;
+                    }
+                }
+            }
+            return max;
         }
     }
 }

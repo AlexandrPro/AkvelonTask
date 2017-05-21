@@ -265,5 +265,28 @@ namespace AkvelonTask.BLLTests
             // assert
             Assert.AreEqual(n, 4);
         }
+
+        [TestMethod]
+        public void LongestSequenceOfOne_SpeadTest_1000()
+        {
+            // arrange
+            int MAX = 1000;
+            List<List<int>> array = new List<List<int>>();
+            for (int i = 0; i < MAX; i++)
+            {
+                List<int> line = new List<int>();
+                for (int j = 0; j < MAX; j++)
+                {
+                    line.Add(1);
+                }
+                array.Add(line);
+            }
+            MatrixProcessor mProc = new MatrixProcessor();
+            mProc.BinaryMatrix = array;
+            // act
+            int n = mProc.LongestSequenceOfOne();
+            // assert
+            Assert.AreEqual(n, MAX);
+        }
     }
 }
