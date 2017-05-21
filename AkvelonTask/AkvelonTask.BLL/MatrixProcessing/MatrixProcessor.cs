@@ -26,7 +26,7 @@ namespace AkvelonTask.BLL.MatrixProcessing
                             throw new InvalidDataException("This is not a bynary matrix");
                         }
                     }
-                    if (value[i].Count != matrix[0].Count)
+                    if (value[i].Count != value[0].Count)
                     {
                         throw new InvalidDataException("Number of elements in the " + i + " row does not match whis number of elements in the first row");
                     }
@@ -37,39 +37,45 @@ namespace AkvelonTask.BLL.MatrixProcessing
 
         public int LongestSequenceOfOne()
         {
-            int maxSequence = 0, rowSequence = 0, columnSequence = 0;
-            for(int i = 0; i < matrix.Count; i++)
+            int maxSequence = 0, sequence = 0;
+            for(int i = 0; i < matrix.Count; i++)//rows
             {
                 for (int j = 0; j < matrix[i].Count; j++)
                 {
                     if (matrix[i][j] == 0)
                     {
-                        if (rowSequence > maxSequence)
+                        if (sequence > maxSequence)
                         {
-                            maxSequence = rowSequence;
+                            maxSequence = sequence;
                         }
-                        rowSequence = 0;
+                        sequence = 0;
                     }
                     else
                     {
-                        ++rowSequence;
-                    }
-
-                    if (matrix[j][i] == 0)
-                    {
-                        if (columnSequence > maxSequence)
-                        {
-                            maxSequence = columnSequence;
-                        }
-                        columnSequence = 0;
-                    }
-                    else
-                    {
-                        ++columnSequence;
+                        ++sequence;
                     }
                 }
             }
             
+            for (int i = 0, j = 0; i < matrix[0].Count; i++)//colnums
+            {
+                for (j = 0; j < matrix.Count; j++)
+                {
+                    if (matrix[j][i] == 0)
+                    {
+                        if (sequence > maxSequence)
+                        {
+                            maxSequence = sequence;
+                        }
+                        sequence = 0;
+                    }
+                    else
+                    {
+                        ++sequence;
+                    }
+                }
+            }
+
             return maxSequence;
         }
     }

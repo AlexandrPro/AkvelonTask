@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace AkvelonTask.BLL.Managers
 {
-    class MatrixManager : IMatrixManager
+    public class MatrixManager : IMatrixManager
     {
         IGetMatrix matrixReader;
         MatrixProcessor mProcessor;
 
-        MatrixManager(IGetMatrix getMatrix)
+        public MatrixManager(IGetMatrix getMatrix)
         {
             matrixReader = getMatrix;
             mProcessor = new MatrixProcessor();
@@ -37,12 +37,12 @@ namespace AkvelonTask.BLL.Managers
             }
         }
         
-        public string GetMatrix()
+        public string GetWorkMatrix()
         {
             StringBuilder matrix = new StringBuilder();
-            for (int i = 0; i < mProcessor.BinaryMatrix.Capacity; i++)
+            for (int i = 0; i < mProcessor.BinaryMatrix.Count; i++)
             {
-                for (int j = 0; j < mProcessor.BinaryMatrix[i].Capacity; j++)
+                for (int j = 0; j < mProcessor.BinaryMatrix[i].Count; j++)
                 {
                     matrix.Append(mProcessor.BinaryMatrix[i][j]);
                     matrix.Append(' ');

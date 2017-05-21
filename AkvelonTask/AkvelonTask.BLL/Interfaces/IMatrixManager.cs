@@ -5,7 +5,7 @@ namespace AkvelonTask.BLL.Interfaces
     public interface IMatrixManager
     {
         void SetNewMatrix(string someInformation);
-        string GetMatrix();
+        string GetWorkMatrix();
         int LongestSequenceOfOne();
     }
 }

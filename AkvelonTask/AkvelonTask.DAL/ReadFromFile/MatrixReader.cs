@@ -17,8 +17,8 @@ namespace AkvelonTask.DAL.ReadFromFile
                 int i = 0;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Console.WriteLine(line);
                     List<int> row = LineToMatrixRow(line);
+                    matrix.Add(row);
                 }
             }
             return matrix;
@@ -31,8 +31,11 @@ namespace AkvelonTask.DAL.ReadFromFile
             int val;
             foreach(string num in nums)
             {
-                val = Int32.Parse(num);
-                row.Add(val);
+                if (num != "")
+                {
+                    val = Int32.Parse(num);
+                    row.Add(val);
+                }
             }
 
             return row;
