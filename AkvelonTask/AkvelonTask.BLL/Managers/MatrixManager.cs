@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace AkvelonTask.BLL.Managers
 {
-    class MatrixManager : IMatrixManager
+    public class MatrixManager : IMatrixManager
     {
         IGetMatrix matrixReader;
         MatrixProcessor mProcessor;
 
-        MatrixManager(IGetMatrix getMatrix)
+        public MatrixManager(IGetMatrix getMatrix)
         {
             matrixReader = getMatrix;
             mProcessor = new MatrixProcessor();

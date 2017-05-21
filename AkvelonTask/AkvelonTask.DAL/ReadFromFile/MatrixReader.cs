@@ -31,8 +31,11 @@ namespace AkvelonTask.DAL.ReadFromFile
             int val;
             foreach(string num in nums)
             {
-                val = Int32.Parse(num);
-                row.Add(val);
+                if (num != "")
+                {
+                    val = Int32.Parse(num);
+                    row.Add(val);
+                }
             }
 
             return row;
