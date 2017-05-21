@@ -35,35 +35,49 @@ namespace AkvelonTask.BLL.MatrixProcessing
             }
         }
 
+        object maxSequenceLocker = new object();
+        int maxSequence = 0;
+
         public int LongestSequenceOfOne()
         {
-            int maxSequence = 0, rowSequence = 0, lineSequence = 0;
+            maxSequence = 0;
 
+
+            Task[] tasks1 = new Task[matrix.Count];
             for (int i = 0; i < matrix.Count; i++)
             {
-                lineSequence = lineSearch(i);
-                if(lineSequence > maxSequence )
+                
+                tasks1[i] = new Task(() =>
                 {
-                    maxSequence = lineSequence;
-                }
+                    lineSearch(i);
+                });
+                tasks1[i].Start();
+
+                //lineSearch(i);
             }
 
+            Task[] tasks2 = new Task[matrix[0].Count];
             for (int i = 0; i < matrix[0].Count; i++)
             {
-                rowSequence = rowSearch(i);
-                if (rowSequence > maxSequence)
+                
+                tasks2[i] = new Task(() =>
                 {
-                    maxSequence = rowSequence;
-                }
+                    rowSearch(i);
+                });
+                tasks2[i].Start();
+
+                //rowSearch(i);
             }
-            
+
+            Task.WaitAll(tasks1);
+            Task.WaitAll(tasks2);
             return maxSequence;
         }
 
-        private int lineSearch(int lineNum)
+        void lineSearch(int lineNum)
         {
-            int sequence = 0, max = 0;
-            for (int j = 0; j < matrix[lineNum].Count; j++)
+            int sequence = 0;
+            for (int j = 0; j < matrix[0].Count; j++)
             {
                 if (matrix[lineNum][j] == 0)
                 {
@@ -72,18 +86,20 @@ namespace AkvelonTask.BLL.MatrixProcessing
                 else
                 {
                     ++sequence;
-                    if (sequence > max)
+                    if (sequence > maxSequence)
                     {
-                        max = sequence;
+                        lock (maxSequenceLocker)
+                        {
+                            maxSequence = sequence;
+                        }
                     }
                 }
             }
-            return max;
         }
 
-        private int rowSearch(int rowNum)
+        void rowSearch(int rowNum)
         {
-            int sequence = 0, max = 0;
+            int sequence = 0;
             for (int i = 0; i < matrix.Count; i++)
             {
                 if (matrix[i][rowNum] == 0)
@@ -93,13 +109,15 @@ namespace AkvelonTask.BLL.MatrixProcessing
                 else
                 {
                     ++sequence;
-                    if (sequence > max)
+                    if (sequence > maxSequence)
                     {
-                        max = sequence;
+                        lock (maxSequenceLocker)
+                        {
+                            maxSequence = sequence;
+                        }
                     }
                 }
             }
-            return max;
         }
     }
 }
